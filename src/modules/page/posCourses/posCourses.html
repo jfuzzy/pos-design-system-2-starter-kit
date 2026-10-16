@@ -1,0 +1,203 @@
+<template>
+    <div class="slds-grid slds-wrap slds-p-left_xx-small page-wrap">
+        <!-- Page Header -->
+        <ui-posHeader class="slds col slds-size_4-of-4"></ui-posHeader>
+        <!-- Left Navigation (3 of 12 columns) -->
+        <div class="slds-col slds-size_1-of-4 slds-p-horizontal_medium slds-show_small">
+            <ui-posNavigation
+                current-page={currentPage}>
+            </ui-posNavigation>
+        </div>
+
+        <!-- Main Content (8 of 12 columns) -->
+        <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-large-size_8-of-12">
+            <slot>
+                <div class="slds-card-wrapper">
+                    <lightning-card>
+                        <div slot="title" class="pos-card-title">
+                            <span>Build Course Plan</span>
+                        </div>
+                        <p class="slds-p-horizontal_small slds-var-m-vertical_medium">
+                        Search for courses and add them to the correct columns
+                        </p>
+                        <lightning-tabset>
+                            <lightning-tab label="1. Transfer courses">
+                                <div>
+                                    <lightning-input
+                                        type="search"
+                                        label="Search your transfer courses"
+                                        name="transfer-search"
+                                        onchange={handleTransferSearch}>
+                                    </lightning-input>
+                                </div>
+                                <template if:true={hasTransferResults}>
+                                    <lightning-datatable
+                                        key-field="id"
+                                        data={filteredTransferCourses}
+                                        columns={columns}
+                                        hide-checkbox-column>
+                                    </lightning-datatable>
+                                </template>
+                                <template if:false={hasTransferResults}>
+                                    <template if:true={hasTransferSearch}>
+                                        <p class="slds-p-vertical_small">No matching transfer courses found.</p>
+                                    </template>
+                                </template>
+                            </lightning-tab>
+                            <lightning-tab label="2. OSU transcript" title="OSU transcript - courses you've already taken">
+                                <div>
+                                    <lightning-input
+                                        type="search"
+                                        label="Search your OSU transcript"
+                                        name="transcript-search"
+                                        onchange={handleTranscriptSearch}>
+                                    </lightning-input>
+                                </div>
+                                <template if:true={hasTranscriptResults}>
+                                    <lightning-datatable
+                                        key-field="id"
+                                        data={filteredTranscriptCourses}
+                                        columns={columns}
+                                        hide-checkbox-column>
+                                    </lightning-datatable>
+                                </template>
+                                <template if:false={hasTranscriptResults}>
+                                    <template if:true={hasTranscriptSearch}>
+                                        <p class="slds-p-vertical_small">No matching transcript courses found.</p>
+                                    </template>
+                                </template>
+                            </lightning-tab>
+                            <lightning-tab label="3. Future courses">
+                                <div>
+                                    <lightning-input
+                                        type="search"
+                                        label="Search for future courses"
+                                        name="future-search"
+                                        onchange={handleFutureSearch}>
+                                    </lightning-input>
+                                </div>
+                                <template if:true={hasFutureResults}>
+                                    <lightning-datatable
+                                        key-field="id"
+                                        data={filteredFutureCourses}
+                                        columns={columns}
+                                        hide-checkbox-column>
+                                    </lightning-datatable>
+                                </template>
+                                <template if:false={hasFutureResults}>
+                                    <template if:true={hasFutureSearch}>
+                                        <p class="slds-p-vertical_small">No matching future courses found.</p>
+                                    </template>
+                                </template>
+                            </lightning-tab>
+                        </lightning-tabset>
+                    </lightning-card>
+                    <section>
+                        <div>
+                            <p class="slds-text-heading_medium slds-p-vertical_small slds-p-horizontal_small">28 out of 45 required credits added</p>
+                        </div>
+                    </section>
+                    <section class="slds-card slds-card_boundary">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__body">
+                                    <h3 class="slds-card__header-title">
+                                        <span class="slds-truncate">
+                                        Major Courses (7 credits)
+                                        </span>
+                                    </h3>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <div style="min-height: 125px;">
+                                <lightning-datatable 
+                                    key-field="id" 
+                                    default-sort-direction="asc" 
+                                    show-row-number-column="true"
+                                    data={data}
+                                    columns={columns}>
+                                </lightning-datatable>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="slds-card slds-card_boundary">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__body">
+                                    <h3 class="slds-card__header-title">
+                                        <span class="slds-truncate">
+                                        Option Courses (7 credits)
+                                        </span>
+                                    </h3>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <div style="min-height: 125px;">
+                                <lightning-datatable 
+                                    key-field="id" 
+                                    default-sort-direction="asc" 
+                                    show-row-number-column="true"
+                                    data={data}
+                                    columns={columns}>
+                                </lightning-datatable>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="slds-card slds-card_boundary">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__body">
+                                    <h3 class="slds-card__header-title">
+                                        <span class="slds-truncate">
+                                        Minor Courses (7 credits)
+                                        </span>
+                                    </h3>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <div style="min-height: 125px;">
+                                <lightning-datatable 
+                                    key-field="id" 
+                                    default-sort-direction="asc" 
+                                    show-row-number-column="true"
+                                    data={data}
+                                    columns={columns}>
+                                </lightning-datatable>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="slds-card slds-card_boundary">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__body">
+                                    <h3 class="slds-card__header-title">
+                                        <span class="slds-truncate">
+                                        Thesis (Capstone) Courses (7 credits)
+                                        </span>
+                                    </h3>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <div style="min-height: 125px;">
+                                <lightning-datatable 
+                                    key-field="id" 
+                                    default-sort-direction="asc" 
+                                    show-row-number-column="true"
+                                    data={data}
+                                    columns={columns}>
+                                </lightning-datatable>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="slds-var-m-top_large">
+                        <button class="slds-button slds-button_brand">Continue</button>
+                    </section>
+                </div>
+            </slot>
+        </div>
+    </div>
+</template>

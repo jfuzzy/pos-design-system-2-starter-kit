@@ -25,7 +25,7 @@ export const apps = [
     icon: 'utility:home',
     pathPrefix: '/app',
     defaultPath: '/app',
-    pages: ['home', 'icons', 'contacts'],
+    pages: ['home', 'icons', 'contacts', 'pos'],
   },
   {
     id: 'console',

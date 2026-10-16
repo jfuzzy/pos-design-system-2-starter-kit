@@ -35,6 +35,20 @@ export const routes = [
     navLabel: 'Contacts',
   },
   {
+    path: '/pos',
+    component: 'page-pos',
+    title: 'Program of Study',
+    navPage: 'pos',
+    navLabel: 'Program of Study',
+  },
+    {
+    path: '/pos-courses',
+    component: 'page-posCourses',
+    title: 'Program of Study',
+    navPage: 'posCourses',
+    navLabel: 'Program of Study',
+  },
+  {
     path: '/contacts/:id',
     component: 'page-contact-detail',
     title: (params) => `Contact ${params.id}`,
