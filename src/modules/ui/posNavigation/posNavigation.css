@@ -1,0 +1,23 @@
+.pos-nav {
+    width: 100%;
+}
+
+/* Each item */
+
+button.slds-nav-vertical__action {
+    font-weight: var(--slds-g-font-weight-7);
+    font-size: var(--slds-g-font-scale-3);
+    border-radius: var(--slds-g-radius-border-2);
+    /* Override from default the top and bottom padding */
+    padding-block-start: var(--slds-g-spacing-4);
+    padding-block-end: var(--slds-g-spacing-4);
+}
+
+button.slds-nav-vertical__action:hover {
+    color: var(--slds-g-color-palette-hot-orange-50);
+}
+
+button.slds-nav-vertical__action:focus {
+    color: var(--slds-g-color-surface-container-1);
+    background: var(--slds-g-color-palette-neutral-20);
+}

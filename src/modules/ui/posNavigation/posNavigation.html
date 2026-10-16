@@ -1,0 +1,32 @@
+<template>
+    <div class="slds-show_small">
+        <nav class="slds-nav-vertical" aria-label="Program of Study">
+
+            <div class="slds-nav-vertical__section">
+
+                <ul>
+                    <template for:each={steps} for:item="step"> 
+
+                        <li
+                            key={step.id}
+                            class={step.className}>
+
+                            <button
+                                class="slds-nav-vertical__action slds-card slds-align_absolute-center"
+                                data-id={step.id} 
+                                onclick={handleNavClick}>
+
+                                {step.label}
+
+                            </button>
+ 
+                        </li>
+
+                    </template>
+                </ul>
+
+            </div>
+
+        </nav>
+    </div>
+</template>
