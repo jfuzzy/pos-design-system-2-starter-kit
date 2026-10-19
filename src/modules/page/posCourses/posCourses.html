@@ -18,7 +18,7 @@
                             <span>Build Course Plan</span>
                         </div>
                         <p class="slds-p-horizontal_small slds-var-m-vertical_medium">
-                        Search for courses and add them to the correct columns
+                        Search for courses and add them to your course plan. You can search for transfer courses, courses you've already taken at OSU, and future courses that you plan to take.
                         </p>
                         <h3 class="slds-text-heading_medium slds-p-vertical_small slds-p-horizontal_small slds-g-color-on-surface-3">Search and Add Courses</h3>
                         <lightning-tabset>
@@ -32,12 +32,14 @@
                                     </lightning-input>
                                 </div>
                                 <template if:true={hasTransferResults}>
-                                    <lightning-datatable
+                                    <ui-coursePlanDatatable
                                         key-field="id"
                                         data={filteredTransferCourses}
                                         columns={columns}
+                                        data-source="transfer"
+                                        onplacementchange={handlePlacementChange}
                                         hide-checkbox-column>
-                                    </lightning-datatable>
+                                    </ui-coursePlanDatatable>
                                 </template>
                                 <template if:false={hasTransferResults}>
                                     <template if:true={hasTransferSearch}>
@@ -55,12 +57,14 @@
                                     </lightning-input>
                                 </div>
                                 <template if:true={hasTranscriptResults}>
-                                    <lightning-datatable
+                                    <ui-coursePlanDatatable
                                         key-field="id"
                                         data={filteredTranscriptCourses}
                                         columns={columns}
+                                        data-source="transcript"
+                                        onplacementchange={handlePlacementChange}
                                         hide-checkbox-column>
-                                    </lightning-datatable>
+                                    </ui-coursePlanDatatable>
                                 </template>
                                 <template if:false={hasTranscriptResults}>
                                     <template if:true={hasTranscriptSearch}>
@@ -78,12 +82,14 @@
                                     </lightning-input>
                                 </div>
                                 <template if:true={hasFutureResults}>
-                                    <lightning-datatable
+                                    <ui-coursePlanDatatable
                                         key-field="id"
                                         data={filteredFutureCourses}
                                         columns={columns}
+                                        data-source="future"
+                                        onplacementchange={handlePlacementChange}
                                         hide-checkbox-column>
-                                    </lightning-datatable>
+                                    </ui-coursePlanDatatable>
                                 </template>
                                 <template if:false={hasFutureResults}>
                                     <template if:true={hasFutureSearch}>
@@ -97,7 +103,7 @@
                     
                         <section>
                             <div>
-                                <h3 class="slds-text-heading_medium slds-p-vertical_small slds-p-horizontal_small">Courses</h3>
+                                <h3 class="slds-text-heading_medium slds-p-vertical_small slds-p-horizontal_small">Course Plan</h3>
                                 <p class="slds-text-heading_small slds-p-vertical_small slds-p-horizontal_small">28 out of 45 required credits added</p>
                             </div>
                         </section>
@@ -115,13 +121,16 @@
                             </div>
                             <div class="slds-card__body slds-card__body_inner">
                                 <div style="min-height: 125px;">
-                                    <lightning-datatable 
-                                        key-field="id" 
-                                        default-sort-direction="asc" 
+                                    <ui-coursePlanDatatable
+                                        key-field="id"
+                                        default-sort-direction="asc"
                                         show-row-number-column="true"
-                                        data={data}
-                                        columns={columns}>
-                                    </lightning-datatable>
+                                        data={majorCourses}
+                                        columns={planColumns}
+                                        data-source="major"
+                                        onplacementchange={handlePlacementChange}
+                                        onrowaction={handlePlanRowAction}>
+                                    </ui-coursePlanDatatable>
                                 </div>
                             </div>
                         </section>
@@ -139,13 +148,16 @@
                             </div>
                             <div class="slds-card__body slds-card__body_inner">
                                 <div style="min-height: 125px;">
-                                    <lightning-datatable 
-                                        key-field="id" 
-                                        default-sort-direction="asc" 
+                                    <ui-coursePlanDatatable
+                                        key-field="id"
+                                        default-sort-direction="asc"
                                         show-row-number-column="true"
-                                        data={data}
-                                        columns={columns}>
-                                    </lightning-datatable>
+                                        data={optionCourses}
+                                        columns={planColumns}
+                                        data-source="option"
+                                        onplacementchange={handlePlacementChange}
+                                        onrowaction={handlePlanRowAction}>
+                                    </ui-coursePlanDatatable>
                                 </div>
                             </div>
                         </section>
@@ -163,13 +175,16 @@
                             </div>
                             <div class="slds-card__body slds-card__body_inner">
                                 <div style="min-height: 125px;">
-                                    <lightning-datatable 
-                                        key-field="id" 
-                                        default-sort-direction="asc" 
+                                    <ui-coursePlanDatatable
+                                        key-field="id"
+                                        default-sort-direction="asc"
                                         show-row-number-column="true"
-                                        data={data}
-                                        columns={columns}>
-                                    </lightning-datatable>
+                                        data={minorCourses}
+                                        columns={planColumns}
+                                        data-source="minor"
+                                        onplacementchange={handlePlacementChange}
+                                        onrowaction={handlePlanRowAction}>
+                                    </ui-coursePlanDatatable>
                                 </div>
                             </div>
                         </section>
@@ -187,13 +202,16 @@
                             </div>
                             <div class="slds-card__body slds-card__body_inner">
                                 <div style="min-height: 125px;">
-                                    <lightning-datatable 
-                                        key-field="id" 
-                                        default-sort-direction="asc" 
+                                    <ui-coursePlanDatatable
+                                        key-field="id"
+                                        default-sort-direction="asc"
                                         show-row-number-column="true"
-                                        data={data}
-                                        columns={columns}>
-                                    </lightning-datatable>
+                                        data={thesisCourses}
+                                        columns={planColumns}
+                                        data-source="thesis"
+                                        onplacementchange={handlePlacementChange}
+                                        onrowaction={handlePlanRowAction}>
+                                    </ui-coursePlanDatatable>
                                 </div>
                             </div>
                         </section>

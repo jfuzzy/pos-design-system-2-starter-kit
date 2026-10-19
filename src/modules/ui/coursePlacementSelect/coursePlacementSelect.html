@@ -1,0 +1,15 @@
+<template>
+    <lightning-button-menu
+        alternative-text="Choose course category"
+        label={buttonLabel}
+        menu-alignment="auto"
+        onselect={handleChange}>
+        <template for:each={options} for:item="option">
+            <lightning-menu-item
+                key={option.value}
+                value={option.value}
+                label={option.label}>
+            </lightning-menu-item>
+        </template>
+    </lightning-button-menu>
+</template>

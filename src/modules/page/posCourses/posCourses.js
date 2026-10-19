@@ -1,23 +1,64 @@
 import { LightningElement } from 'lwc';
 
-const columns = [
-    { label: 'Course Title', fieldName: 'title' },
+const categoryOptions = [
+    { label: 'Major Courses', value: 'major' },
+    { label: 'Option Courses', value: 'option' },
+    { label: 'Minor Courses', value: 'minor' },
+    { label: 'Thesis (Capstone) Courses', value: 'thesis' }
+];
+
+const baseColumns = [
+    { label: 'Course Title', fieldName: 'title'},
+    {
+        label: 'Add to Course Plan',
+        fieldName: 'placement',
+        type: 'coursePlacement',
+        initialWidth: 200,
+        typeAttributes: {
+            value: { fieldName: 'placement' },
+            rowId: { fieldName: 'id' },
+            options: categoryOptions,
+            variant: 'bare'
+        }
+    },
     { label: 'Course ID', fieldName: 'cid' },
     { label: 'Grade', fieldName: 'grade' },
-    { label: 'Credits', fieldName: 'credits' },
-    { label: 'Action', fieldName: 'add' }
+    { label: 'Credits', fieldName: 'credits' }
 ];
 
-const transferCourses = [
-    { id: 'transfer-1', title: 'Principles of Accounting', cid: 'ACCT-511', grade: 'A', credits: '4', add: '+ Add' },
-    { id: 'transfer-2', title: 'Introduction to Economics', cid: 'ECON-501', grade: 'A', credits: '4', add: '+ Add' },
-    { id: 'transfer-3', title: 'Business Statistics', cid: 'BA-575', grade: 'B+', credits: '4', add: '+ Add' }
+const planColumns = [
+    ...baseColumns,
+    {
+        label: '',
+        fieldName: 'remove',
+        type: 'button-icon',
+      //  initialWidth: 50,
+        typeAttributes: {
+            iconName: { fieldName: 'remove' },
+            alternativeText: 'Remove course',
+            title: 'Remove course',
+            name: 'remove',
+            variant: 'bare',
+            iconClass: 'slds-button__icon_large slds-icon-text-error'
+        }
+    }
 ];
 
-const futureCourses = [
-    { id: 'future-1', title: 'Business Analytics', cid: 'BA-573', grade: '', credits: '3', add: '+ Add' },
-    { id: 'future-2', title: 'Strategic Management', cid: 'MGMT-580', grade: '', credits: '3', add: '+ Add' },
-    { id: 'future-3', title: 'Marketing Strategy', cid: 'MKTG-555', grade: '', credits: '3', add: '+ Add' }
+const transcriptCourseData = [
+    { id: '1', title: 'CROSS CULTURAL MANAGEMENT', cid: 'MGMT-546', grade: 'A+', credits: '3' },
+    { id: '2', title: 'ADVANCED INFORMATION SYSTEMS', cid: 'BA-572', grade: 'B-', credits: '4' }
+];
+
+const transferCourseData = [
+    { id: 'transfer-1', title: 'Principles of Accounting', cid: 'ACCT-511', grade: 'A', credits: '4' },
+    { id: 'transfer-2', title: 'Introduction to Economics', cid: 'ECON-501', grade: 'A', credits: '4' },
+    { id: 'transfer-3', title: 'Business Statistics', cid: 'BA-575', grade: 'B+', credits: '4' }
+];
+
+const futureCourseData = [
+    { id: 'future-1', title: 'Business Analytics', cid: 'BA-573', grade: '', credits: '3' },
+    { id: 'future-2', title: 'Strategic Management', cid: 'MGMT-580', grade: '', credits: '3' },
+    { id: 'future-3', title: 'Marketing Strategy', cid: 'MKTG-555', grade: '', credits: '3' }
 ];
 
 function searchCourses(courses, searchTerm) {
@@ -32,30 +73,28 @@ function searchCourses(courses, searchTerm) {
     );
 }
 
+function createPlanCourse(course, placement) {
+    return {
+        ...course,
+        placement,
+        remove: 'utility:delete'
+    };
+}
+
 export default class posCourses extends LightningElement {
-    columns = columns;
+    columns = baseColumns;
+    planColumns = planColumns;
     transferSearchTerm = '';
     transcriptSearchTerm = '';
     futureSearchTerm = '';
 
-    data = [
-        {
-            id: '1',
-            title: 'CROSS CULTURAL MANAGEMENT',
-            cid: 'MGMT-546',
-            grade: 'A+',
-            credits: '3',
-            add: 'Remove'
-        },
-        {
-            id: '2',
-            title: 'ADVANCED INFORMATION SYSTEMS',
-            cid: 'BA-572',
-            grade: 'B-',
-            credits: '4',
-            add: 'Remove'
-        }
-    ];
+    transcriptCourses = transcriptCourseData.map(course => ({ ...course, placement: 'major' }));
+    transferCourses = transferCourseData.map(course => ({ ...course, placement: '' }));
+    futureCourses = futureCourseData.map(course => ({ ...course, placement: '' }));
+    majorCourses = transcriptCourseData.map(course => createPlanCourse(course, 'major'));
+    optionCourses = [];
+    minorCourses = [];
+    thesisCourses = [];
 
     handleTransferSearch(event) {
         this.transferSearchTerm = event.detail.value ?? '';
@@ -69,16 +108,110 @@ export default class posCourses extends LightningElement {
         this.futureSearchTerm = event.detail.value ?? '';
     }
 
+    handlePlacementChange(event) {
+        const { rowId, placement } = event.detail;
+        const source = event.currentTarget.dataset.source;
+        const destinationField = this.getPlanField(placement);
+
+        if (source === 'transfer' || source === 'future') {
+            const sourceField = source === 'transfer' ? 'transferCourses' : 'futureCourses';
+            const course = this[sourceField].find(item => item.id === rowId);
+
+            if (!course) {
+                return;
+            }
+
+            this[sourceField] = this[sourceField].filter(item => item.id !== rowId);
+            this[destinationField] = [
+                ...this[destinationField],
+                createPlanCourse(course, placement)
+            ];
+            return;
+        }
+
+        if (source === 'transcript') {
+            const course = this.transcriptCourses.find(item => item.id === rowId);
+
+            if (!course || course.placement === placement) {
+                return;
+            }
+
+            const currentField = course.placement ? this.getPlanField(course.placement) : null;
+            if (currentField) {
+                this[currentField] = this[currentField].filter(item => item.id !== rowId);
+            }
+
+            this[destinationField] = [
+                ...this[destinationField],
+                createPlanCourse(course, placement)
+            ];
+            this.transcriptCourses = this.transcriptCourses.map(item =>
+                item.id === rowId ? { ...item, placement } : item
+            );
+            return;
+        }
+
+        const sourceField = this.getPlanField(source);
+        if (sourceField === destinationField) {
+            return;
+        }
+
+        const course = this[sourceField].find(item => item.id === rowId);
+        if (!course) {
+            return;
+        }
+
+        this[sourceField] = this[sourceField].filter(item => item.id !== rowId);
+        this[destinationField] = [
+            ...this[destinationField],
+            createPlanCourse(course, placement)
+        ];
+        this.updateTranscriptPlacement(rowId, placement);
+    }
+
+    handlePlanRowAction(event) {
+        if (event.detail.action.name !== 'remove') {
+            return;
+        }
+
+        const sourceField = this.getPlanField(event.currentTarget.dataset.source);
+        const rowId = event.detail.row.id;
+        this[sourceField] = this[sourceField].filter(item => item.id !== rowId);
+        this.updateTranscriptPlacement(rowId, '');
+    }
+
+    updateTranscriptPlacement(rowId, placement) {
+        this.transcriptCourses = this.transcriptCourses.map(item =>
+            item.id === rowId ? { ...item, placement } : item
+        );
+    }
+
+    getPlanField(placement) {
+        const planFields = {
+            major: 'majorCourses',
+            option: 'optionCourses',
+            minor: 'minorCourses',
+            thesis: 'thesisCourses'
+        };
+        const field = planFields[placement];
+
+        if (!field) {
+            throw new Error(`Unknown course category: ${placement}`);
+        }
+
+        return field;
+    }
+
     get filteredTransferCourses() {
-        return searchCourses(transferCourses, this.transferSearchTerm);
+        return searchCourses(this.transferCourses, this.transferSearchTerm);
     }
 
     get filteredTranscriptCourses() {
-        return searchCourses(this.data, this.transcriptSearchTerm);
+        return searchCourses(this.transcriptCourses, this.transcriptSearchTerm);
     }
 
     get filteredFutureCourses() {
-        return searchCourses(futureCourses, this.futureSearchTerm);
+        return searchCourses(this.futureCourses, this.futureSearchTerm);
     }
 
     get hasTransferSearch() {
