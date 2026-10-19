@@ -48,6 +48,13 @@ export const routes = [
     navPage: 'posCourses',
     navLabel: 'Program of Study',
   },
+      {
+    path: '/pos-committee',
+    component: 'page-posCommittee',
+    title: 'Committee',
+    navPage: 'posCommittee',
+    navLabel: 'Committee',
+  },
   {
     path: '/contacts/:id',
     component: 'page-contact-detail',

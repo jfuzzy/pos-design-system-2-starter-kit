@@ -19,6 +19,7 @@ export default class PosNavigation extends LightningElement {
         {
             id: 'committee',
             label: 'Select Committee',
+            path: '/pos-committee',
             className: 'slds-card'
         },
         {

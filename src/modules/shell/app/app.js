@@ -16,6 +16,7 @@ import ContactDetail from 'page/contactDetail';
 import Builder from 'page/builder';
 import POS from 'page/pos';
 import posCourses from 'page/posCourses';
+import posCommittee from 'page/posCommittee';
 import NotFound from 'page/notFound';
 
 /** Option A: explicit registration – add one import + one entry here when adding a route */
@@ -27,6 +28,7 @@ const ROUTE_COMPONENTS = {
     'page-builder': Builder,
     'page-pos': POS,
     'page-posCourses': posCourses,
+    'page-posCommittee': posCommittee,
 };
 
 /** Derived from routes.config: component name → nav page id (includes navHighlight for child routes) */
