@@ -1,3 +1,35 @@
 <template>
-    hello world!
+    <div class="slds-grid slds-wrap slds-p-left_xx-small page-wrap">
+        <!-- Page Header -->
+        <ui-posHeader class="slds col slds-size_4-of-4"></ui-posHeader>
+        <!-- Left Navigation (3 of 12 columns) -->
+        <div class="slds-col slds-size_1-of-4 slds-p-horizontal_medium slds-show_small">
+            <ui-posNavigation
+                current-page={currentPage}>
+            </ui-posNavigation>
+        </div>
+
+        <!-- Main Content (8 of 12 columns) -->
+        <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-large-size_8-of-12">
+            <slot>
+                <div class="slds-card-wrapper">
+                    <lightning-card>
+                        <div slot="title" class="pos-card-title">
+                            <span>Additional Requirements</span>
+                        </div>
+                        <p class="slds-p-horizontal_small slds-var-m-vertical_medium bold">Ethical Research Training (Required For All Students)</p>
+                        <p class="slds-p-horizontal_small slds-var-m-vertical_medium">
+                            Students are expected to "Be able to conduct scholarly or professional activities in an ethical manner". Indicate the training you have completed or will complete to meet this learning outcome. Your plan includes training in the conduct of scholarly or professional activities in an ethical manner. This could be a course offered by your degree program, GRAD 520, RCR training modules, training in research groups, etc. For more information on the requirement, see the responsible research practices website.
+                        </p>
+                        <lightning-input class="slds-p-horizontal_small" type="text" label="Ethical Research Training" name="ethical-training" placeholder="Enter your training here"></lightning-input>
+                        <div class="slds-p-horizontal_small slds-m-bottom_xx-large slds-m-top_large">
+                            <button class="slds-button slds-button_brand">Save</button>
+                        </div>
+                        <button class="slds-button slds-button_neutral slds-m-right_small">Back</button>
+                        <button class="slds-button slds-button_brand">Continue</button>
+                    </lightning-card>
+                </div>
+            </slot>
+        </div>
+    </div>
 </template>
