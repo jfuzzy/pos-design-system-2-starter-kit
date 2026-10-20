@@ -1,0 +1,240 @@
+import { LightningElement } from 'lwc';
+
+const categoryOptions = [
+    { label: 'Major Courses', value: 'major' },
+    { label: 'Option Courses', value: 'option' },
+    { label: 'Minor Courses', value: 'minor' },
+    { label: 'Thesis (Capstone) Courses', value: 'thesis' }
+];
+
+const baseColumns = [
+    { label: 'Course Title', fieldName: 'title'},
+    { label: 'Course ID', fieldName: 'cid' },
+    { label: 'Grade', fieldName: 'grade' },
+    { label: 'Credits', fieldName: 'credits' },
+    {
+        label: 'Section',
+        fieldName: 'placement',
+        type: 'coursePlacement',
+        initialWidth: 200,
+        typeAttributes: {
+            value: { fieldName: 'placement' },
+            rowId: { fieldName: 'id' },
+            options: categoryOptions,
+            variant: 'bare'
+        }
+    }
+];
+
+const planColumns = [
+    ...baseColumns,
+    {
+        label: '',
+        fieldName: 'remove',
+        type: 'button-icon',
+      //  initialWidth: 50,
+        typeAttributes: {
+            iconName: { fieldName: 'remove' },
+            alternativeText: 'Remove course',
+            title: 'Remove course',
+            name: 'remove',
+            variant: 'bare',
+            iconClass: 'slds-button__icon_large slds-icon-text-error'
+        }
+    }
+];
+
+const transcriptCourseData = [
+    { id: '1', title: 'CROSS CULTURAL MANAGEMENT', cid: 'MGMT-546', grade: 'A+', credits: '3' },
+    { id: '2', title: 'ADVANCED INFORMATION SYSTEMS', cid: 'BA-572', grade: 'B-', credits: '4' }
+];
+
+const transferCourseData = [
+    { id: 'transfer-1', title: 'Principles of Accounting', cid: 'ACCT-511', grade: 'A', credits: '4' },
+    { id: 'transfer-2', title: 'Introduction to Economics', cid: 'ECON-501', grade: 'A', credits: '4' },
+    { id: 'transfer-3', title: 'Business Statistics', cid: 'BA-575', grade: 'B+', credits: '4' }
+];
+
+const futureCourseData = [
+    { id: 'future-1', title: 'Business Analytics', cid: 'BA-573', grade: '', credits: '3' },
+    { id: 'future-2', title: 'Strategic Management', cid: 'MGMT-580', grade: '', credits: '3' },
+    { id: 'future-3', title: 'Marketing Strategy', cid: 'MKTG-555', grade: '', credits: '3' }
+];
+
+function searchCourses(courses, searchTerm) {
+    const term = searchTerm.trim().toLowerCase();
+    if (!term) {
+        return courses;
+    }
+
+    return courses.filter(course =>
+        [course.title, course.cid, course.grade, course.credits]
+            .some(value => value.toLowerCase().includes(term))
+    );
+}
+
+function createPlanCourse(course, placement) {
+    return {
+        ...course,
+        placement,
+        remove: 'utility:delete'
+    };
+}
+
+export default class posCoursesCombo extends LightningElement {
+    columns = baseColumns;
+    planColumns = planColumns;
+    transferSearchTerm = '';
+    transcriptSearchTerm = '';
+    futureSearchTerm = '';
+
+    transcriptCourses = transcriptCourseData.map(course => ({ ...course, placement: 'major' }));
+    transferCourses = transferCourseData.map(course => ({ ...course, placement: '' }));
+    futureCourses = futureCourseData.map(course => ({ ...course, placement: '' }));
+    majorCourses = transcriptCourseData.map(course => createPlanCourse(course, 'major'));
+    optionCourses = [];
+    minorCourses = [];
+    thesisCourses = [];
+
+    handleTransferSearch(event) {
+        this.transferSearchTerm = event.detail.value ?? '';
+    }
+
+    handleTranscriptSearch(event) {
+        this.transcriptSearchTerm = event.detail.value ?? '';
+    }
+
+    handleFutureSearch(event) {
+        this.futureSearchTerm = event.detail.value ?? '';
+    }
+
+    handlePlacementChange(event) {
+        const { rowId, placement } = event.detail;
+        const source = event.currentTarget.dataset.source;
+        const destinationField = this.getPlanField(placement);
+
+        if (source === 'transfer' || source === 'future') {
+            const sourceField = source === 'transfer' ? 'transferCourses' : 'futureCourses';
+            const course = this[sourceField].find(item => item.id === rowId);
+
+            if (!course) {
+                return;
+            }
+
+            this[sourceField] = this[sourceField].filter(item => item.id !== rowId);
+            this[destinationField] = [
+                ...this[destinationField],
+                createPlanCourse(course, placement)
+            ];
+            return;
+        }
+
+        if (source === 'transcript') {
+            const course = this.transcriptCourses.find(item => item.id === rowId);
+
+            if (!course || course.placement === placement) {
+                return;
+            }
+
+            const currentField = course.placement ? this.getPlanField(course.placement) : null;
+            if (currentField) {
+                this[currentField] = this[currentField].filter(item => item.id !== rowId);
+            }
+
+            this[destinationField] = [
+                ...this[destinationField],
+                createPlanCourse(course, placement)
+            ];
+            this.transcriptCourses = this.transcriptCourses.map(item =>
+                item.id === rowId ? { ...item, placement } : item
+            );
+            return;
+        }
+
+        const sourceField = this.getPlanField(source);
+        if (sourceField === destinationField) {
+            return;
+        }
+
+        const course = this[sourceField].find(item => item.id === rowId);
+        if (!course) {
+            return;
+        }
+
+        this[sourceField] = this[sourceField].filter(item => item.id !== rowId);
+        this[destinationField] = [
+            ...this[destinationField],
+            createPlanCourse(course, placement)
+        ];
+        this.updateTranscriptPlacement(rowId, placement);
+    }
+
+    handlePlanRowAction(event) {
+        if (event.detail.action.name !== 'remove') {
+            return;
+        }
+
+        const sourceField = this.getPlanField(event.currentTarget.dataset.source);
+        const rowId = event.detail.row.id;
+        this[sourceField] = this[sourceField].filter(item => item.id !== rowId);
+        this.updateTranscriptPlacement(rowId, '');
+    }
+
+    updateTranscriptPlacement(rowId, placement) {
+        this.transcriptCourses = this.transcriptCourses.map(item =>
+            item.id === rowId ? { ...item, placement } : item
+        );
+    }
+
+    getPlanField(placement) {
+        const planFields = {
+            major: 'majorCourses',
+            option: 'optionCourses',
+            minor: 'minorCourses',
+            thesis: 'thesisCourses'
+        };
+        const field = planFields[placement];
+
+        if (!field) {
+            throw new Error(`Unknown course category: ${placement}`);
+        }
+
+        return field;
+    }
+
+    get filteredTransferCourses() {
+        return searchCourses(this.transferCourses, this.transferSearchTerm);
+    }
+
+    get filteredTranscriptCourses() {
+        return searchCourses(this.transcriptCourses, this.transcriptSearchTerm);
+    }
+
+    get filteredFutureCourses() {
+        return searchCourses(this.futureCourses, this.futureSearchTerm);
+    }
+
+    get hasTransferSearch() {
+        return Boolean(this.transferSearchTerm.trim());
+    }
+
+    get hasTranscriptSearch() {
+        return Boolean(this.transcriptSearchTerm.trim());
+    }
+
+    get hasFutureSearch() {
+        return Boolean(this.futureSearchTerm.trim());
+    }
+
+    get hasTransferResults() {
+        return this.filteredTransferCourses.length > 0;
+    }
+
+    get hasTranscriptResults() {
+        return this.filteredTranscriptCourses.length > 0;
+    }
+
+    get hasFutureResults() {
+        return this.filteredFutureCourses.length > 0;
+    }
+}

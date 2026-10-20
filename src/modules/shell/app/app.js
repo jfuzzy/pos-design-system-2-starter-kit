@@ -16,6 +16,7 @@ import ContactDetail from 'page/contactDetail';
 import Builder from 'page/builder';
 import POS from 'page/pos';
 import posCourses from 'page/posCourses';
+import posCoursesCombo from 'page/posCoursesCombo';
 import posCommittee from 'page/posCommittee';
 import NotFound from 'page/notFound';
 
@@ -28,6 +29,7 @@ const ROUTE_COMPONENTS = {
     'page-builder': Builder,
     'page-pos': POS,
     'page-posCourses': posCourses,
+    'page-posCoursesCombo': posCoursesCombo,
     'page-posCommittee': posCommittee,
 };
 

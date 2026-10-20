@@ -1,0 +1,37 @@
+/* Increase the font-size to 16px */
+.page-wrap {
+    font-size: var(--slds-g-font-scale-2);
+}
+
+.pos-card-title {
+    font-size:var(--slds-g-font-scale-6);
+    padding-inline-start: var(--slds-g-spacing-3);
+    padding-inline-end: var(--slds-g-spacing-3);
+}
+
+.slds-page-header {
+    background-color: var(--slds-g-color-surface-container-3);
+    margin-bottom: var(--slds-g-spacing-var-block-6);
+}
+
+.slds-page-header__name-title, 
+h3 {
+    color: var(--slds-g-color-on-surface-3)
+}
+
+.slds-button_brand {
+    background: var(--slds-g-color-palette-hot-orange-50);
+    border: var(--slds-g-color-palette-hot-orange-50);
+    color: var(--slds-g-color-on-accent-1);
+    font-size:var(--slds-g-font-scale-2);
+}
+
+.slds-checkbox_toggle .slds-form-element__label, .slds-checkbox--toggle .slds-form-element__label {
+    color: var(--slds-g-color-on-surface-2);
+}
+
+/* Line up the card headers with the card body */
+.slds-card__body_inner, .slds-card__body--inner {
+    --slds-c-card-body-spacing-inline-end: var(--slds-g-spacing-var-inline-4);
+    --slds-c-card-body-spacing-inline-start: var(--slds-g-spacing-var-inline-4);
+}

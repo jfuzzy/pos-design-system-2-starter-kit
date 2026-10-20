@@ -41,14 +41,21 @@ export const routes = [
     navPage: 'pos',
     navLabel: 'Program of Study',
   },
-    {
+  {
     path: '/pos-courses',
     component: 'page-posCourses',
     title: 'Program of Study',
     navPage: 'posCourses',
     navLabel: 'Program of Study',
   },
-      {
+  {
+    path: '/pos-coursescombo',
+    component: 'page-posCoursesCombo',
+    title: 'Program of Study',
+    navPage: 'posCoursesCombo',
+    navLabel: 'Program of Study',
+  },
+  {
     path: '/pos-committee',
     component: 'page-posCommittee',
     title: 'Committee',
