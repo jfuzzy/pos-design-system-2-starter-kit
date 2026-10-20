@@ -26,6 +26,19 @@ const baseColumns = [
     }
 ];
 
+const searchColumns = [
+    ...baseColumns,
+    {
+        label: 'Add to Plan',
+        type: 'button',
+        typeAttributes: {
+            label: 'Add to Plan',
+            name: 'addToPlan',
+            variant: 'brand'
+        }
+    }
+];
+
 const planColumns = [
     ...baseColumns,
     {
@@ -82,7 +95,7 @@ function createPlanCourse(course, placement) {
 }
 
 export default class posCoursesCombo extends LightningElement {
-    columns = baseColumns;
+    searchColumns = searchColumns;
     planColumns = planColumns;
     transferSearchTerm = '';
     transcriptSearchTerm = '';
@@ -92,9 +105,6 @@ export default class posCoursesCombo extends LightningElement {
     transferCourses = transferCourseData.map(course => ({ ...course, placement: '' }));
     futureCourses = futureCourseData.map(course => ({ ...course, placement: '' }));
     majorCourses = transcriptCourseData.map(course => createPlanCourse(course, 'major'));
-    optionCourses = [];
-    minorCourses = [];
-    thesisCourses = [];
 
     handleTransferSearch(event) {
         this.transferSearchTerm = event.detail.value ?? '';
@@ -108,64 +118,52 @@ export default class posCoursesCombo extends LightningElement {
         this.futureSearchTerm = event.detail.value ?? '';
     }
 
-    handlePlacementChange(event) {
+    handleSearchPlacementChange(event) {
         const { rowId, placement } = event.detail;
-        const source = event.currentTarget.dataset.source;
-        const destinationField = this.getPlanField(placement);
+        const sourceField = this.getSearchField(event.currentTarget.dataset.source);
 
-        if (source === 'transfer' || source === 'future') {
-            const sourceField = source === 'transfer' ? 'transferCourses' : 'futureCourses';
-            const course = this[sourceField].find(item => item.id === rowId);
+        this[sourceField] = this[sourceField].map(course =>
+            course.id === rowId ? { ...course, placement } : course
+        );
+    }
 
-            if (!course) {
-                return;
-            }
-
-            this[sourceField] = this[sourceField].filter(item => item.id !== rowId);
-            this[destinationField] = [
-                ...this[destinationField],
-                createPlanCourse(course, placement)
-            ];
+    handleAddToPlan(event) {
+        if (event.detail.action.name !== 'addToPlan') {
             return;
         }
 
-        if (source === 'transcript') {
-            const course = this.transcriptCourses.find(item => item.id === rowId);
-
-            if (!course || course.placement === placement) {
-                return;
-            }
-
-            const currentField = course.placement ? this.getPlanField(course.placement) : null;
-            if (currentField) {
-                this[currentField] = this[currentField].filter(item => item.id !== rowId);
-            }
-
-            this[destinationField] = [
-                ...this[destinationField],
-                createPlanCourse(course, placement)
-            ];
-            this.transcriptCourses = this.transcriptCourses.map(item =>
-                item.id === rowId ? { ...item, placement } : item
-            );
-            return;
-        }
-
-        const sourceField = this.getPlanField(source);
-        if (sourceField === destinationField) {
-            return;
-        }
-
+        const rowId = event.detail.row.id;
+        const sourceField = this.getSearchField(event.currentTarget.dataset.source);
         const course = this[sourceField].find(item => item.id === rowId);
+
         if (!course) {
             return;
         }
 
-        this[sourceField] = this[sourceField].filter(item => item.id !== rowId);
-        this[destinationField] = [
-            ...this[destinationField],
-            createPlanCourse(course, placement)
-        ];
+        if (sourceField !== 'transcriptCourses') {
+            this[sourceField] = this[sourceField].filter(item => item.id !== rowId);
+        }
+
+        const placement = course.placement || 'major';
+        if (this.majorCourses.some(item => item.id === rowId)) {
+            this.majorCourses = this.majorCourses.map(item =>
+                item.id === rowId ? createPlanCourse(course, placement) : item
+            );
+        } else {
+            this.majorCourses = [
+                ...this.majorCourses,
+                createPlanCourse(course, placement)
+            ];
+        }
+
+        this.updateTranscriptPlacement(rowId, placement);
+    }
+
+    handlePlacementChange(event) {
+        const { rowId, placement } = event.detail;
+        this.majorCourses = this.majorCourses.map(course =>
+            course.id === rowId ? { ...course, placement } : course
+        );
         this.updateTranscriptPlacement(rowId, placement);
     }
 
@@ -174,9 +172,8 @@ export default class posCoursesCombo extends LightningElement {
             return;
         }
 
-        const sourceField = this.getPlanField(event.currentTarget.dataset.source);
         const rowId = event.detail.row.id;
-        this[sourceField] = this[sourceField].filter(item => item.id !== rowId);
+        this.majorCourses = this.majorCourses.filter(item => item.id !== rowId);
         this.updateTranscriptPlacement(rowId, '');
     }
 
@@ -186,17 +183,16 @@ export default class posCoursesCombo extends LightningElement {
         );
     }
 
-    getPlanField(placement) {
-        const planFields = {
-            major: 'majorCourses',
-            option: 'optionCourses',
-            minor: 'minorCourses',
-            thesis: 'thesisCourses'
+    getSearchField(source) {
+        const searchFields = {
+            transfer: 'transferCourses',
+            transcript: 'transcriptCourses',
+            future: 'futureCourses'
         };
-        const field = planFields[placement];
+        const field = searchFields[source];
 
         if (!field) {
-            throw new Error(`Unknown course category: ${placement}`);
+            throw new Error(`Unknown course source: ${source}`);
         }
 
         return field;

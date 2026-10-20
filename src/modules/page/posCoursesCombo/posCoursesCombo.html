@@ -35,9 +35,10 @@
                                     <ui-coursePlanDatatable
                                         key-field="id"
                                         data={filteredTransferCourses}
-                                        columns={columns}
+                                        columns={searchColumns}
                                         data-source="transfer"
-                                        onplacementchange={handlePlacementChange}
+                                        onplacementchange={handleSearchPlacementChange}
+                                        onrowaction={handleAddToPlan}
                                         hide-checkbox-column>
                                     </ui-coursePlanDatatable>
                                 </template>
@@ -60,9 +61,10 @@
                                     <ui-coursePlanDatatable
                                         key-field="id"
                                         data={filteredTranscriptCourses}
-                                        columns={columns}
+                                        columns={searchColumns}
                                         data-source="transcript"
-                                        onplacementchange={handlePlacementChange}
+                                        onplacementchange={handleSearchPlacementChange}
+                                        onrowaction={handleAddToPlan}
                                         hide-checkbox-column>
                                     </ui-coursePlanDatatable>
                                 </template>
@@ -85,9 +87,10 @@
                                     <ui-coursePlanDatatable
                                         key-field="id"
                                         data={filteredFutureCourses}
-                                        columns={columns}
+                                        columns={searchColumns}
                                         data-source="future"
-                                        onplacementchange={handlePlacementChange}
+                                        onplacementchange={handleSearchPlacementChange}
+                                        onrowaction={handleAddToPlan}
                                         hide-checkbox-column>
                                     </ui-coursePlanDatatable>
                                 </template>
@@ -113,7 +116,7 @@
                                     <div class="slds-media__body">
                                         <h3 class="slds-card__header-title">
                                             <span class="slds-truncate">
-                                            Major Courses (7 credits)
+                                            Planned Courses
                                             </span>
                                         </h3>
                                     </div>
@@ -129,87 +132,6 @@
                                         data={majorCourses}
                                         columns={planColumns}
                                         data-source="major"
-                                        onplacementchange={handlePlacementChange}
-                                        onrowaction={handlePlanRowAction}>
-                                    </ui-coursePlanDatatable>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="slds-card slds-card_boundary">
-                            <div class="slds-card__header slds-grid">
-                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                                    <div class="slds-media__body">
-                                        <h3 class="slds-card__header-title">
-                                            <span class="slds-truncate">
-                                            Option Courses (7 credits)
-                                            </span>
-                                        </h3>
-                                    </div>
-                                </header>
-                            </div>
-                            <div class="slds-card__body slds-card__body_inner">
-                                <div style="min-height: 125px;">
-                                    <ui-coursePlanDatatable
-                                        key-field="id"
-                                        default-sort-direction="asc"
-                                        show-row-number-column="true"
-                                        data={optionCourses}
-                                        columns={planColumns}
-                                        data-source="option"
-                                        onplacementchange={handlePlacementChange}
-                                        onrowaction={handlePlanRowAction}>
-                                    </ui-coursePlanDatatable>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="slds-card slds-card_boundary">
-                            <div class="slds-card__header slds-grid">
-                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                                    <div class="slds-media__body">
-                                        <h3 class="slds-card__header-title">
-                                            <span class="slds-truncate">
-                                            Minor Courses (7 credits)
-                                            </span>
-                                        </h3>
-                                    </div>
-                                </header>
-                            </div>
-                            <div class="slds-card__body slds-card__body_inner">
-                                <div style="min-height: 125px;">
-                                    <ui-coursePlanDatatable
-                                        key-field="id"
-                                        default-sort-direction="asc"
-                                        show-row-number-column="true"
-                                        data={minorCourses}
-                                        columns={planColumns}
-                                        data-source="minor"
-                                        onplacementchange={handlePlacementChange}
-                                        onrowaction={handlePlanRowAction}>
-                                    </ui-coursePlanDatatable>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="slds-card slds-card_boundary">
-                            <div class="slds-card__header slds-grid">
-                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                                    <div class="slds-media__body">
-                                        <h3 class="slds-card__header-title">
-                                            <span class="slds-truncate">
-                                            Thesis (Capstone) Courses (7 credits)
-                                            </span>
-                                        </h3>
-                                    </div>
-                                </header>
-                            </div>
-                            <div class="slds-card__body slds-card__body_inner">
-                                <div style="min-height: 125px;">
-                                    <ui-coursePlanDatatable
-                                        key-field="id"
-                                        default-sort-direction="asc"
-                                        show-row-number-column="true"
-                                        data={thesisCourses}
-                                        columns={planColumns}
-                                        data-source="thesis"
                                         onplacementchange={handlePlacementChange}
                                         onrowaction={handlePlanRowAction}>
                                     </ui-coursePlanDatatable>
