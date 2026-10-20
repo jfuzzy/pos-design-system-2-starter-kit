@@ -24,11 +24,40 @@
                     <div class="slds-grid slds-wrap slds-p-left_xx-small">
                         <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-large-size_6-of-12">
                             <lightning-card>
-                                <div>
+                                <div class="slds-var-m-vertical_medium">
                                     <lightning-input
                                         type="search"
                                         label="Academic Unit Chair"
-                                        name="chair-search">
+                                        name="chair-search"
+                                        placeholder="Search by last name">
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-var-m-vertical_medium">
+                                    <lightning-input
+                                        type="search"
+                                        label="Major Professor"
+                                        name="majorprof-search">
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-var-m-vertical_medium">
+                                    <lightning-input
+                                        type="search"
+                                        label="Commitee Member (required)"
+                                        name="committee-search">
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-var-m-vertical_medium">
+                                    <lightning-input
+                                        type="search"
+                                        label="Committee Member (required)"
+                                        name="committee-search">
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-var-m-vertical_medium">
+                                    <lightning-input
+                                        type="search"
+                                        label="Committee Member (optional)"
+                                        name="committee-search">
                                     </lightning-input>
                                 </div>
                             </lightning-card>
@@ -74,6 +103,10 @@
                                 </div>
                             </lightning-card>
                         </div>
+                        <section class="slds-var-m-top_large">
+                                    <button class="slds-button slds-button_neutral slds-m-right_small">Back</button>
+                                    <button class="slds-button slds-button_brand">Continue</button>
+                                </section>
                     </div>
                 </div>
             </slot>
