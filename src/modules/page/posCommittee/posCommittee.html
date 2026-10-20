@@ -1,3 +1,82 @@
 <template>
-    hello world!
+    <div class="slds-grid slds-wrap slds-p-left_xx-small page-wrap">
+        <!-- Page Header -->
+        <ui-posHeader class="slds col slds-size_4-of-4"></ui-posHeader>
+        <!-- Left Navigation (3 of 12 columns) -->
+        <div class="slds-col slds-size_1-of-4 slds-p-horizontal_medium slds-show_small">
+            <ui-posNavigation
+                current-page={currentPage}>
+            </ui-posNavigation>
+        </div>
+
+        <!-- Main Content (8 of 12 columns) -->
+        <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-large-size_8-of-12">
+            <slot>
+                <div class="slds-card-wrapper">
+                    <lightning-card>
+                        <div slot="title" class="pos-card-title">
+                            <span>Committee Members</span>
+                        </div>
+                        <p class="slds-p-horizontal_small slds-var-m-vertical_medium">
+                        Search by entering the last name of the person you are adding to your program of study.
+                        </p>
+                    </lightning-card>
+                    <div class="slds-grid slds-wrap slds-p-left_xx-small">
+                        <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-large-size_6-of-12">
+                            <lightning-card>
+                                <div>
+                                    <lightning-input
+                                        type="search"
+                                        label="Academic Unit Chair"
+                                        name="chair-search">
+                                    </lightning-input>
+                                </div>
+                            </lightning-card>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-large-size_6-of-12">
+                            <lightning-card>
+                                <div>
+                                    <h3>Search Results</h3>
+                                </div>
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_6-of-12 slds-p-around_small pos-committee-search-result">
+                                        <article class="slds-card slds-p-around_small">
+                                            <div class="slds-card__header slds-grid" data-aura-rendered-by="20:1938;a">
+                                                <header class="slds-media slds-media_center slds-has-flexi-truncate" data-aura-rendered-by="21:1938;a">
+                                                    <div class="slds-media__figure" data-aura-rendered-by="23:1938;a">
+                                                        <lightning-icon icon-name="standard:contact" class="slds-icon-standard-contact slds-icon_container" data-aura-rendered-by="24:1938;a" lwc-4897l11qtae-host="">
+                                                            
+                                                        </lightning-icon>
+                                                    </div>
+                                                    <div class="slds-media__body" data-aura-rendered-by="25:1938;a">
+                                                        <h2 class="slds-card__header-title" data-aura-rendered-by="26:1938;a">
+                                                            <span class="slds-text-heading_small slds-truncate" data-aura-rendered-by="27:1938;a">John McQueen</span>
+                                                        </h2>
+                                                    </div>
+                                                    <div class="slds-no-flex" data-aura-rendered-by="30:1938;a">
+                                                        <button type="button" class="slds-button slds-button_neutral padding-right" data-aura-rendered-by="13:1938;a"><!--render facet: 14:1938;a-->Select<!--render facet: 17:1938;a--></button>
+                                                    </div>
+                                                </header>
+                                            </div>
+                                            <div class="slds-card__body" data-aura-rendered-by="32:1938;a">
+                                                <div class="slds-col slds-size_12-of-12" data-aura-rendered-by="5:1938;a">
+                                                    <p>mcqueenj@oregonstate.edu</p>
+                                                </div>
+                                                <div class="slds-col slds-size_12-of-12" data-aura-rendered-by="7:1938;a">
+                                                    <p>Digital Experience</p>
+                                                </div>
+                                                <div class="slds-col slds-size_12-of-12" data-aura-rendered-by="9:1938;a">
+                                                    <p>IT Project Coord</p>
+                                                </div>
+                                            </div><!--render facet: 34:1938;a-->
+                                        </article>
+                                    </div>
+                                </div>
+                            </lightning-card>
+                        </div>
+                    </div>
+                </div>
+            </slot>
+        </div>
+    </div>
 </template>
