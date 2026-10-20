@@ -63,6 +63,13 @@ export const routes = [
     navLabel: 'Committee',
   },
   {
+    path: '/pos-additional',
+    component: 'page-posAdditional',
+    title: 'Additional Requirements',
+    navPage: 'posAdditional',
+    navLabel: 'Additional Requirements',
+  },
+  {
     path: '/contacts/:id',
     component: 'page-contact-detail',
     title: (params) => `Contact ${params.id}`,

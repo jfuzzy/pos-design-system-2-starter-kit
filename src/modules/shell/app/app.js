@@ -18,6 +18,7 @@ import POS from 'page/pos';
 import posCourses from 'page/posCourses';
 import posCoursesCombo from 'page/posCoursesCombo';
 import posCommittee from 'page/posCommittee';
+import posAdditional from 'page/posAdditional';
 import NotFound from 'page/notFound';
 
 /** Option A: explicit registration – add one import + one entry here when adding a route */
@@ -31,6 +32,7 @@ const ROUTE_COMPONENTS = {
     'page-posCourses': posCourses,
     'page-posCoursesCombo': posCoursesCombo,
     'page-posCommittee': posCommittee,
+    'page-posAdditional': posAdditional
 };
 
 /** Derived from routes.config: component name → nav page id (includes navHighlight for child routes) */

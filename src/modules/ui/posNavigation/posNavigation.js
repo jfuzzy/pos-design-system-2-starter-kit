@@ -31,6 +31,7 @@ export default class PosNavigation extends LightningElement {
         {
             id: 'requirements',
             label: 'Additional Requirements',
+            path: '/pos-additional',
             className: 'slds-card' 
         },
         {
