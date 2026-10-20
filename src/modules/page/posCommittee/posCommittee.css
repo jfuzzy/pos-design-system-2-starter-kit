@@ -22,3 +22,10 @@ h3 {
 .pos-committee-search-result {
     background-color: var(--slds-g-color-surface-container-3, var(--lwc-colorBackgroundAlt));
 }
+
+.slds-button_brand {
+    background: var(--slds-g-color-palette-hot-orange-50);
+    border: var(--slds-g-color-palette-hot-orange-50);
+    color: var(--slds-g-color-on-accent-1);
+    font-size:var(--slds-g-font-scale-2);
+}
