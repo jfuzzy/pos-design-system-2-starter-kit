@@ -37,6 +37,7 @@ export default class PosNavigation extends LightningElement {
         {
             id: 'review',
             label: 'Review & Submit',
+            path: '/pos-review',
             className: 'slds-card'
         }
     ];

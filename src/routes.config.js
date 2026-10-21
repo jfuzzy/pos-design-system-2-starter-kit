@@ -70,6 +70,13 @@ export const routes = [
     navLabel: 'Additional Requirements',
   },
   {
+    path: '/pos-review',
+    component: 'page-posReview',
+    title: 'Review and Submit',
+    navPage: 'posReview',
+    navLabel: 'Review and Submit',
+  },
+  {
     path: '/contacts/:id',
     component: 'page-contact-detail',
     title: (params) => `Contact ${params.id}`,
