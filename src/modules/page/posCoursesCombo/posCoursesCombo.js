@@ -8,15 +8,15 @@ const categoryOptions = [
 ];
 
 const baseColumns = [
-    { label: 'Course Title', fieldName: 'title'},
-    { label: 'Course ID', fieldName: 'cid' },
-    { label: 'Grade', fieldName: 'grade' },
-    { label: 'Credits', fieldName: 'credits' },
+    { label: 'Course Title', fieldName: 'title', initialWidth: 300},
+    { label: 'Course ID', fieldName: 'cid', initialWidth: 120 },
+    { label: 'Grade', fieldName: 'grade', initialWidth: 100 },
+    { label: 'Credits', fieldName: 'credits', initialWidth: 100 },
     {
         label: 'Section',
         fieldName: 'placement',
         type: 'coursePlacement',
-        initialWidth: 200,
+        initialWidth: 300,
         typeAttributes: {
             value: { fieldName: 'placement' },
             rowId: { fieldName: 'id' },
@@ -34,7 +34,8 @@ const searchColumns = [
         typeAttributes: {
             label: 'Add to Plan',
             name: 'addToPlan',
-            variant: 'brand'
+            variant: 'brand',
+            initialWidth: 100
         }
     }
 ];

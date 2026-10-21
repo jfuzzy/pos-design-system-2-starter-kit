@@ -1,32 +1,19 @@
 import { LightningElement } from "lwc";
-export default class posCombobox extends LightningElement {
-  statusOptions = [
-        { 
-        value: "overview", 
-        label: "Overview", 
-        },
-        {
-        value: "course-builder",
-        label: "Course Builder",
-        },
-        {
-        value: "committe-finder",
-        label: "Committee Finder",
-        },
-        {
-        value: "additional-requirements",
-        label: "Additional Requirements",
-        },
-        {
-        value: "review-submit",
-        label: "Review & Submit",
-        },
-    ];
+import { navigate } from '../../../router';
+import { POS_NAVIGATION_LINKS } from '../../../posNavigation.config';
 
-  value = "new";
+export default class posCombobox extends LightningElement {
+  get statusOptions() {
+    return POS_NAVIGATION_LINKS.map(({ path, label }) => ({
+      value: path,
+      label
+    }));
+  }
+
+  value = '';
 
   handleChange(event) {
-    // Get the string of the "value" attribute on the selected option
     this.value = event.detail.value;
+    navigate(this.value);
   }
 }
