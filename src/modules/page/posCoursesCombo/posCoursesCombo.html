@@ -7,6 +7,7 @@
             <ui-posNavigation
                 current-page={currentPage}>
             </ui-posNavigation>
+            <div>Insert AuditRules</div>
         </div>
 
         <!-- Main Content (8 of 12 columns) -->
@@ -28,7 +29,8 @@
                                         type="search"
                                         label="Search your transfer courses"
                                         name="transfer-search"
-                                        onchange={handleTransferSearch}>
+                                        onchange={handleTransferSearch}
+                                        class="slds-var-m-bottom_small">
                                     </lightning-input>
                                 </div>
                                 <template if:true={hasTransferResults}>
@@ -54,7 +56,8 @@
                                         type="search"
                                         label="Search your OSU transcript"
                                         name="transcript-search"
-                                        onchange={handleTranscriptSearch}>
+                                        onchange={handleTranscriptSearch}
+                                        class="slds-var-m-bottom_small">
                                     </lightning-input>
                                 </div>
                                 <template if:true={hasTranscriptResults}>
@@ -80,7 +83,8 @@
                                         type="search"
                                         label="Search for future courses"
                                         name="future-search"
-                                        onchange={handleFutureSearch}>
+                                        onchange={handleFutureSearch}
+                                        class="slds-var-m-bottom_small">
                                     </lightning-input>
                                 </div>
                                 <template if:true={hasFutureResults}>
@@ -111,17 +115,6 @@
                             </div>
                         </section>
                         <section class="slds-card slds-card_boundary">
-                            <div class="slds-card__header slds-grid">
-                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                                    <div class="slds-media__body">
-                                        <h3 class="slds-card__header-title">
-                                            <span class="slds-truncate">
-                                            Planned Courses
-                                            </span>
-                                        </h3>
-                                    </div>
-                                </header>
-                            </div>
                             <div class="slds-card__body slds-card__body_inner">
                                 <div style="min-height: 125px;">
                                     <ui-coursePlanDatatable
