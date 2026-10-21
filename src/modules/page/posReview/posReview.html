@@ -12,7 +12,7 @@
         <!-- Main Content (8 of 12 columns) -->
         <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-large-size_8-of-12">
             <slot>
-                <div class="slds-card-wrapper slds-var-m-vertical_medium">
+                <div class="slds-card-wrapper slds-var-m-bottom_medium">
                     <lightning-card>
                         <div slot="title" class="pos-card-title">
                             <span>Review and Submit</span>
@@ -24,9 +24,9 @@
                     </lightning-card>
                 </div>
                 <div class="slds-card-wrapper slds-var-m-vertical_medium">
-                    <lightning-card>
-                        <div class="slds-grid slds-gutters">
-                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-4">
+                    <lightning-card hide-header="true">
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-4 slds-p-vertical_small">
                                 <article class="slds-card slds-card_boundary">
                                     <div class="slds-card__header slds-grid">
                                         <header class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -51,7 +51,7 @@
                                     </div>
                                 </article>
                             </div>
-                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-4">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-4 slds-p-vertical_small">
                                 <article class="slds-card slds-card_boundary">
                                     <div class="slds-card__header slds-grid">
                                         <header class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -76,7 +76,7 @@
                                     </div>
                                 </article>
                             </div>
-                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-4">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-4 slds-p-vertical_small">
                                 <article class="slds-card slds-card_boundary">
                                     <div class="slds-card__header slds-grid">
                                         <header class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -101,7 +101,7 @@
                                     </div>
                                 </article>
                             </div>
-                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-4">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-4 slds-p-vertical_small">
                                 <article class="slds-card slds-card_boundary">
                                     <div class="slds-card__header slds-grid">
                                         <header class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -131,7 +131,7 @@
                 </div>
                 <!-- Buttons for Review and Submit -->
                 <div class="slds-card-wrapper">    
-                    <lightning-card>
+                    <lightning-card hide-header="true">
                         <div class="slds-p-horizontal_small slds-var-m-vertical_medium">
                             <button class="slds-button slds-button_neutral slds-m-right_small">Back</button>
                             <button class="slds-button slds-button_neutral slds-m-right_small">Preview</button>
