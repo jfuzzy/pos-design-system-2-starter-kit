@@ -1,0 +1,115 @@
+{
+    "degrees": [
+        {
+            "id": "mba",
+            "label": "MBA",
+            "requirements": {
+                "major": 25,
+                "minor": 12,
+                "option": 3,
+                "thesis": 14,
+                "nonThesis": 10
+            }
+        },
+        {
+            "id": "mph",
+            "label": "MPH",
+            "requirements": {
+                "major": 24,
+                "minor": 10,
+                "option": 6,
+                "thesis": 12,
+                "nonThesis": 8
+            }
+        }
+    ],
+    "majors": [
+        {
+            "id": "business-administration",
+            "label": "Business Administration (2050, major)",
+            "requirements": {
+                "mba": 25,
+                "mph": 22
+            }
+        },
+        {
+            "id": "public-health",
+            "label": "Public Health",
+            "requirements": {
+                "mba": 24,
+                "mph": 24
+            }
+        }
+    ],
+    "minors": [
+        {
+            "id": "animal-science",
+            "label": "Animal Science",
+            "requirements": {
+                "mba": 15,
+                "mph": 12
+            }
+        },
+        {
+            "id": "nutrition",
+            "label": "Nutrition",
+            "requirements": {
+                "mba": 12,
+                "mph": 9
+            }
+        },
+        {
+            "id": "global-health",
+            "label": "Global Health",
+            "requirements": {
+                "mba": 12,
+                "mph": 12
+            }
+        }
+    ],
+    "options": [
+        {
+            "id": "epidemiology",
+            "label": "Epidemiology",
+            "requirements": {
+                "mba": 12,
+                "mph": 9
+            }
+        },
+        {
+            "id": "global-health",
+            "label": "Global Health",
+            "requirements": {
+                "mba": 9,
+                "mph": 6
+            }
+        },
+        {
+            "id": "health-policy",
+            "label": "Health Policy",
+            "requirements": {
+                "mba": 6,
+                "mph": 6
+            }
+        }
+    ],
+    "thesisModes": [
+        {
+            "label": "Thesis",
+            "value": "thesis"
+        },
+        {
+            "label": "Non-thesis",
+            "value": "nonThesis"
+        }
+    ],
+    "defaultSelection": {
+        "degree": "mba",
+        "major": "business-administration",
+        "minor1": "",
+        "minor2": "",
+        "option1": "",
+        "option2": "",
+        "thesisMode": "thesis"
+    }
+}

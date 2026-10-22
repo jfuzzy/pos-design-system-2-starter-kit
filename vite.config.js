@@ -61,6 +61,7 @@ export default defineConfig({
       disableSyntheticShadowSupport: false,
       enableDynamicComponents: true,
       exclude: [
+        path.resolve('./src/data/posProgramConfig.json'),
         path.resolve('./index.html'),
         /loading\.css/,
         path.resolve('./src/build/generated'),

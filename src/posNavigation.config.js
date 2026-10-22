@@ -10,11 +10,6 @@ export const POS_NAVIGATION_LINKS = [
         path: '/pos-courses'
     },
     {
-        id: 'coursePlanSingle',
-        label: 'Course Plan Single',
-        path: '/pos-coursescombo'
-    },
-    {
         id: 'committee',
         label: 'Select Committee',
         path: '/pos-committee'

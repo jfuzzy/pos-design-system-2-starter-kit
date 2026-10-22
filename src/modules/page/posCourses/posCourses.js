@@ -1,4 +1,8 @@
 import { LightningElement } from 'lwc';
+import {
+    getProgramRequirements,
+    loadProgramSelection
+} from '../../../data/posProgramSelection';
 
 const categoryOptions = [
     { label: 'Major Courses', value: 'major' },
@@ -10,13 +14,13 @@ const categoryOptions = [
 const baseColumns = [
     { label: 'Course Title', fieldName: 'title'},
     { label: 'Course ID', fieldName: 'cid' },
-    { label: 'Grade', fieldName: 'grade' },
-    { label: 'Credits', fieldName: 'credits' },
+    { label: 'Grade', fieldName: 'grade', initialWidth: 100 },
+    { label: 'Credits', fieldName: 'credits', initialWidth: 100 },
     {
         label: 'Section',
         fieldName: 'placement',
         type: 'coursePlacement',
-        initialWidth: 200,
+        initialWidth: 300,
         typeAttributes: {
             value: { fieldName: 'placement' },
             rowId: { fieldName: 'id' },
@@ -32,7 +36,7 @@ const planColumns = [
         label: '',
         fieldName: 'remove',
         type: 'button-icon',
-      //  initialWidth: 50,
+        initialWidth: 50,
         typeAttributes: {
             iconName: { fieldName: 'remove' },
             alternativeText: 'Remove course',
@@ -81,6 +85,17 @@ function createPlanCourse(course, placement) {
     };
 }
 
+function sumCourseCredits(courses) {
+    return courses.reduce((total, course) => {
+        const credits = Number(course.credits);
+        if (!String(course.credits).trim() || !Number.isFinite(credits) || credits < 0) {
+            throw new Error(`Invalid credit value for course ${course.id}`);
+        }
+
+        return total + credits;
+    }, 0);
+}
+
 export default class posCourses extends LightningElement {
     columns = baseColumns;
     planColumns = planColumns;
@@ -95,6 +110,11 @@ export default class posCourses extends LightningElement {
     optionCourses = [];
     minorCourses = [];
     thesisCourses = [];
+    programSelection = {};
+
+    connectedCallback() {
+        this.programSelection = loadProgramSelection();
+    }
 
     handleTransferSearch(event) {
         this.transferSearchTerm = event.detail.value ?? '';
@@ -236,5 +256,32 @@ export default class posCourses extends LightningElement {
 
     get hasFutureResults() {
         return this.filteredFutureCourses.length > 0;
+    }
+
+    get requiredCredits() {
+        return getProgramRequirements(this.programSelection);
+    }
+
+    get totalCreditsAdded() {
+        return this.majorCreditsAdded +
+            this.optionCreditsAdded +
+            this.minorCreditsAdded +
+            this.thesisCreditsAdded;
+    }
+
+    get majorCreditsAdded() {
+        return sumCourseCredits(this.majorCourses);
+    }
+
+    get optionCreditsAdded() {
+        return sumCourseCredits(this.optionCourses);
+    }
+
+    get minorCreditsAdded() {
+        return sumCourseCredits(this.minorCourses);
+    }
+
+    get thesisCreditsAdded() {
+        return sumCourseCredits(this.thesisCourses);
     }
 }

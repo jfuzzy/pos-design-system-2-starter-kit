@@ -34,8 +34,20 @@
                             </header>
                         </div>
                         <div class="slds-card__body slds-card__body_inner">
-                        <p><strong>Major: </strong> Business Administration (2050, major)</p>
-                        <p><strong>Degree:</strong> MBA</p> 
+                        <lightning-combobox
+                            label="Major"
+                            value={selectedMajor}
+                            options={majorOptions}
+                            data-field="major"
+                            onchange={handleProgramSelectionChange}>
+                        </lightning-combobox>
+                        <lightning-combobox
+                            label="Degree"
+                            value={selectedDegree}
+                            options={degreeOptions}
+                            data-field="degree"
+                            onchange={handleProgramSelectionChange}>
+                        </lightning-combobox>
                         <p><strong>Campus:</strong> Corvallis</p>
                         </div>
                     </section>
@@ -52,29 +64,14 @@
                             </header>
                         </div>
                         <div class="slds-card__body slds-card__body_inner">
-                            <div class="slds-form-element slds-var-m-vertical_medium">
-                                <label class="slds-form-element__label" for="select-01">
-                                    <abbr class="slds-required" title="required">
-                                    *
-                                    </abbr>
-                                    Choose thesis or non-thesis
-                                </label>
-                                <div class="slds-form-element__control">
-                                    <div class="slds-select_container">
-                                        <select class="slds-select" id="select-01" required="">
-                                            <option value="">
-                                            Select…
-                                            </option>
-                                            <option>
-                                            Thesis
-                                            </option>
-                                            <option>
-                                            Non-thesis
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            <lightning-combobox
+                                class="slds-var-m-vertical_medium"
+                                label="Choose thesis or non-thesis"
+                                value={selectedThesisMode}
+                                options={thesisModeOptions}
+                                data-field="thesisMode"
+                                onchange={handleProgramSelectionChange}>
+                            </lightning-combobox>
                             <div class="slds-form-element slds-var-m-vertical_small">
                                 <div class="slds-form-element__control">
                                     <label class="slds-checkbox_toggle slds-grid" for="checkbox-toggle-124" part="checkbox-toggle">
@@ -101,52 +98,22 @@
                             </header>
                         </div>
                         <div class="slds-card__body slds-card__body_inner">
-                            <div class="slds-form-element slds-var-m-bottom_small">
-                                <label class="slds-form-element__label" for="select-02">
-                                    Choose first minor
-                                </label>
-                                <div class="slds-form-element__control">
-                                    <div class="slds-select_container">
-                                        <select class="slds-select" id="select-02" required="">
-                                            <option value="">
-                                            Select…
-                                            </option>
-                                            <option>
-                                            Animal Science
-                                            </option>
-                                            <option>
-                                            Nutrition
-                                            </option>
-                                            <option>
-                                            Etc...
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="slds-form-element slds-var-m-bottom_small">
-                                <label class="slds-form-element__label" for="select-03">
-                                    Choose second minor
-                                </label>
-                                <div class="slds-form-element__control">
-                                    <div class="slds-select_container">
-                                        <select class="slds-select" id="select-03" required="">
-                                            <option value="">
-                                            Select…
-                                            </option>
-                                            <option>
-                                            Animal Science
-                                            </option>
-                                            <option>
-                                            Nutrition
-                                            </option>
-                                            <option>
-                                            Etc...
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            <lightning-combobox
+                                class="slds-var-m-bottom_small"
+                                label="Choose first minor"
+                                value={selectedMinor1}
+                                options={minorOptions}
+                                data-field="minor1"
+                                onchange={handleProgramSelectionChange}>
+                            </lightning-combobox>
+                            <lightning-combobox
+                                class="slds-var-m-bottom_small"
+                                label="Choose second minor"
+                                value={selectedMinor2}
+                                options={minorOptions}
+                                data-field="minor2"
+                                onchange={handleProgramSelectionChange}>
+                            </lightning-combobox>
                         </div>
                     </section>
                     <section class="slds-card slds-card_boundary">
@@ -162,52 +129,22 @@
                             </header>
                         </div>
                         <div class="slds-card__body slds-card__body_inner">
-                            <div class="slds-form-element slds-var-m-bottom_small">
-                                <label class="slds-form-element__label" for="select-04">
-                                    Choose first option
-                                </label>
-                                <div class="slds-form-element__control">
-                                    <div class="slds-select_container">
-                                        <select class="slds-select" id="select-04" required="">
-                                            <option value="">
-                                            Select…
-                                            </option>
-                                            <option>
-                                            Epidemiology
-                                            </option>
-                                            <option>
-                                            Global Health
-                                            </option>
-                                            <option>
-                                            Etc...
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="slds-form-element slds-var-m-bottom_small">
-                                <label class="slds-form-element__label" for="select-05">
-                                    Choose second option
-                                </label>
-                                <div class="slds-form-element__control">
-                                    <div class="slds-select_container">
-                                        <select class="slds-select" id="select-05" required="">
-                                            <option value="">
-                                            Select…
-                                            </option>
-                                            <option>
-                                            Epidemiology
-                                            </option>
-                                            <option>
-                                            Global Health
-                                            </option>
-                                            <option>
-                                            Etc...
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            <lightning-combobox
+                                class="slds-var-m-bottom_small"
+                                label="Choose first option"
+                                value={selectedOption1}
+                                options={optionOptions}
+                                data-field="option1"
+                                onchange={handleProgramSelectionChange}>
+                            </lightning-combobox>
+                            <lightning-combobox
+                                class="slds-var-m-bottom_small"
+                                label="Choose second option"
+                                value={selectedOption2}
+                                options={optionOptions}
+                                data-field="option2"
+                                onchange={handleProgramSelectionChange}>
+                            </lightning-combobox>
                         </div>
                     </section>
                     <section class="slds-var-m-top_large">
