@@ -7,7 +7,68 @@
             <ui-posNavigation
                 current-page={currentPage}>
             </ui-posNavigation>
-            <div>Insert AuditRules</div>
+            <div class="slds-var-m-vertical_medium">
+                <lightning-card>
+                    <div slot="title" class="pos-card-title slds-m-top_medium">
+                        <span>Checklist</span>
+                    </div>
+                    <p class="slds-p-horizontal_large slds-var-m-vertical_large">
+                        Review your course plan to ensure you have met all requirements. The checklist below will help you identify any areas that need attention.
+                    </p>
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        <!-- Minor (1) Rule -->
+                        <div class="slds-col slds-size_1-of-1">
+                            <article class="slds-card slds-card_boundary slds-m-around_small">
+                                <div class="slds-card__header slds-grid">
+                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                        <div class="slds-media__body">
+                                            <h3 class="slds-card__header-title bold">
+                                                <span>
+                                                Minor (1) requires 15 credits
+                                                </span>
+                                            </h3>
+                                        </div>
+                                    </header>
+                                </div>
+                                <div class="slds-card__body slds-card__body_inner">
+                                    <p>Your total: 12 credits</p>
+                                </div>
+                                <div class="slds-card__footer slds-card__footer_inner slds-align_absolute-center">
+                                    <div class="slds-align_absolute-center">
+                                        <lightning-icon icon-name="utility:success" size="small" class="slds-m-right_x-small"></lightning-icon>
+                                        <span>PASS</span>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        <!-- Option (1) Rule -->
+                        <div class="slds-col slds-size_1-of-1">
+                            <article class="slds-card slds-card_boundary slds-m-around_small">
+                                <div class="slds-card__header slds-grid">
+                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                        <div class="slds-media__body">
+                                            <h3 class="slds-card__header-title bold">
+                                                <span>
+                                                Option (1) requires 12 credits
+                                                </span>
+                                            </h3>
+                                        </div>
+                                    </header>
+                                </div>
+                                <div class="slds-card__body slds-card__body_inner">
+                                    <p>Your total: 10 credits</p>
+                                </div>
+                                <div class="slds-card__footer slds-card__footer_inner slds-align_absolute-center">
+                                    <div class="slds-align_absolute-center">
+                                        <lightning-icon icon-name="utility:warning" size="small" class="slds-m-right_x-small"></lightning-icon>
+                                        <span>FIX</span>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
         </div>
 
         <!-- Main Content (8 of 12 columns) -->
