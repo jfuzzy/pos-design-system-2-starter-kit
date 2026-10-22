@@ -77,10 +77,11 @@ function searchCourses(courses, searchTerm) {
     );
 }
 
-function createPlanCourse(course, placement) {
+function createPlanCourse(course, placement, origin = course.origin) {
     return {
         ...course,
         placement,
+        origin,
         remove: 'utility:delete'
     };
 }
@@ -106,7 +107,7 @@ export default class posCourses extends LightningElement {
     transcriptCourses = transcriptCourseData.map(course => ({ ...course, placement: 'major' }));
     transferCourses = transferCourseData.map(course => ({ ...course, placement: '' }));
     futureCourses = futureCourseData.map(course => ({ ...course, placement: '' }));
-    majorCourses = transcriptCourseData.map(course => createPlanCourse(course, 'major'));
+    majorCourses = transcriptCourseData.map(course => createPlanCourse(course, 'major', 'transcript'));
     optionCourses = [];
     minorCourses = [];
     thesisCourses = [];
@@ -144,7 +145,7 @@ export default class posCourses extends LightningElement {
             this[sourceField] = this[sourceField].filter(item => item.id !== rowId);
             this[destinationField] = [
                 ...this[destinationField],
-                createPlanCourse(course, placement)
+                createPlanCourse(course, placement, source)
             ];
             return;
         }
@@ -163,7 +164,7 @@ export default class posCourses extends LightningElement {
 
             this[destinationField] = [
                 ...this[destinationField],
-                createPlanCourse(course, placement)
+                createPlanCourse(course, placement, 'transcript')
             ];
             this.transcriptCourses = this.transcriptCourses.map(item =>
                 item.id === rowId ? { ...item, placement } : item
@@ -196,8 +197,32 @@ export default class posCourses extends LightningElement {
 
         const sourceField = this.getPlanField(event.currentTarget.dataset.source);
         const rowId = event.detail.row.id;
+        const course = this[sourceField].find(item => item.id === rowId);
+        if (!course) {
+            return;
+        }
+
         this[sourceField] = this[sourceField].filter(item => item.id !== rowId);
-        this.updateTranscriptPlacement(rowId, '');
+
+        const originFields = {
+            transfer: 'transferCourses',
+            transcript: 'transcriptCourses',
+            future: 'futureCourses'
+        };
+        const originField = originFields[course.origin];
+        if (!originField) {
+            throw new Error(`Unknown course origin: ${course.origin}`);
+        }
+
+        const { remove, origin, ...sourceCourse } = course;
+        if (origin === 'transcript') {
+            this.updateTranscriptPlacement(rowId, '');
+        } else {
+            this[originField] = [
+                ...this[originField],
+                { ...sourceCourse, placement: '' }
+            ];
+        }
     }
 
     updateTranscriptPlacement(rowId, placement) {
@@ -227,7 +252,17 @@ export default class posCourses extends LightningElement {
     }
 
     get filteredTranscriptCourses() {
-        return searchCourses(this.transcriptCourses, this.transcriptSearchTerm);
+        const plannedCourseIds = new Set([
+            ...this.majorCourses,
+            ...this.optionCourses,
+            ...this.minorCourses,
+            ...this.thesisCourses
+        ].map(course => course.id));
+
+        return searchCourses(
+            this.transcriptCourses.filter(course => !plannedCourseIds.has(course.id)),
+            this.transcriptSearchTerm
+        );
     }
 
     get filteredFutureCourses() {
