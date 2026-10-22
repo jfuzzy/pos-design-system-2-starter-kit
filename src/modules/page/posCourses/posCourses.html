@@ -3,14 +3,101 @@
         <!-- Page Header -->
         <ui-posHeader class="slds col slds-size_4-of-4"></ui-posHeader>
         <!-- Left Navigation (3 of 12 columns) -->
-        <div class="slds-col slds-size_1-of-4 slds-p-horizontal_medium slds-show_small">
+        <div class="slds-col slds-size_2-of-12 slds-p-horizontal_medium slds-show_small">
             <ui-posNavigation
                 current-page={currentPage}>
             </ui-posNavigation>
+            <div class="slds-var-m-vertical_medium">
+                <lightning-card>
+                    <div slot="title" class="pos-card-title slds-m-top_medium">
+                        <span>Alerts</span>
+                    </div>
+                    <p class="slds-p-horizontal_large slds-var-m-vertical_large">
+                        The alerts default to showing all the fails and once they pass they are removed from the list.
+                    </p>
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        <!-- When there are no fails -->
+                        <div class="slds-col slds-size_1-of-1">
+                            <article class="slds-card slds-card_boundary slds-m-around_small">
+                                <div class="slds-card__header slds-grid">
+                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                        <div class="slds-media__body">
+                                            <h3 class="slds-card__header-title bold">
+                                                <span>
+                                                No alerts
+                                                </span>
+                                            </h3>
+                                        </div>
+                                    </header>
+                                </div>
+                                <div class="slds-card__body slds-card__body_inner">
+                                    <p>All requirements met</p>
+                                </div>
+                                <div class="slds-card__footer slds-card__footer_inner slds-align_absolute-center">
+                                    <div class="slds-align_absolute-center">
+                                        <lightning-icon icon-name="utility:success" size="small" class="slds-m-right_x-small"></lightning-icon>
+                                        <span>PASS</span>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        <!-- Minor (1) Rule -->
+                        <div class="slds-col slds-size_1-of-1">
+                            <article class="slds-card slds-card_boundary slds-m-around_small">
+                                <div class="slds-card__header slds-grid">
+                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                        <div class="slds-media__body">
+                                            <h3 class="slds-card__header-title bold">
+                                                <span>
+                                                Minor (1) requires 15 credits
+                                                </span>
+                                            </h3>
+                                        </div>
+                                    </header>
+                                </div>
+                                <div class="slds-card__body slds-card__body_inner">
+                                    <p>Your total: 12 credits</p>
+                                </div>
+                                <div class="slds-card__footer slds-card__footer_inner slds-align_absolute-center">
+                                    <div class="slds-align_absolute-center">
+                                        <lightning-icon icon-name="utility:warning" size="small" class="slds-m-right_x-small"></lightning-icon>
+                                        <span>FAIL</span>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        <!-- Option (1) Rule -->
+                        <div class="slds-col slds-size_1-of-1">
+                            <article class="slds-card slds-card_boundary slds-m-around_small">
+                                <div class="slds-card__header slds-grid">
+                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                        <div class="slds-media__body">
+                                            <h3 class="slds-card__header-title bold">
+                                                <span>
+                                                Option (1) requires 12 credits
+                                                </span>
+                                            </h3>
+                                        </div>
+                                    </header>
+                                </div>
+                                <div class="slds-card__body slds-card__body_inner">
+                                    <p>Your total: 10 credits</p>
+                                </div>
+                                <div class="slds-card__footer slds-card__footer_inner slds-align_absolute-center">
+                                    <div class="slds-align_absolute-center">
+                                        <lightning-icon icon-name="utility:warning" size="small" class="slds-m-right_x-small"></lightning-icon>
+                                        <span>FIX</span>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
         </div>
 
         <!-- Main Content (8 of 12 columns) -->
-        <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-large-size_8-of-12">
+        <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-large-size_10-of-12">
             <slot>
                 <div class="slds-card-wrapper">
                     <lightning-card>
@@ -47,7 +134,7 @@
                                     </template>
                                 </template>
                             </lightning-tab>
-                            <lightning-tab label="2. OSU transcript" title="OSU transcript - courses you've already taken">
+                            <lightning-tab label="2. Current and past courses" title="Current and past courses">
                                 <div>
                                     <lightning-input
                                         type="search"
@@ -103,8 +190,8 @@
                     
                         <section>
                             <div>
-                                <h3 class="slds-text-heading_medium slds-p-vertical_small slds-p-horizontal_small">Course Plan</h3>
-                                <p class="slds-text-heading_small slds-p-vertical_small slds-p-horizontal_small">28 out of 45 required credits added</p>
+                                <h3 class="slds-text-heading_medium slds-p-horizontal_small">Course Plan</h3>
+                                <p class="slds-text-heading_small slds-p-vertical_small slds-p-horizontal_small">{totalCreditsAdded} out of {requiredCredits.total} total required credits added</p>
                             </div>
                         </section>
                         <section class="slds-card slds-card_boundary">
@@ -113,9 +200,10 @@
                                     <div class="slds-media__body">
                                         <h3 class="slds-card__header-title">
                                             <span class="slds-truncate">
-                                            Major Courses (7 credits)
+                                            Major Courses
                                             </span>
                                         </h3>
+                                        <p class="slds-text-heading_small slds-p-vertical_small">{majorCreditsAdded} out of {requiredCredits.major} required credits added</p>
                                     </div>
                                 </header>
                             </div>
@@ -141,9 +229,10 @@
                                     <div class="slds-media__body">
                                         <h3 class="slds-card__header-title">
                                             <span class="slds-truncate">
-                                            Option Courses (7 credits)
+                                            Option Courses
                                             </span>
                                         </h3>
+                                        <p class="slds-text-heading_small slds-p-vertical_small">{optionCreditsAdded} out of {requiredCredits.option} required credits added</p>
                                     </div>
                                 </header>
                             </div>
@@ -168,9 +257,10 @@
                                     <div class="slds-media__body">
                                         <h3 class="slds-card__header-title">
                                             <span class="slds-truncate">
-                                            Minor Courses (7 credits)
+                                            Minor Courses
                                             </span>
                                         </h3>
+                                        <p class="slds-text-heading_small slds-p-vertical_small">{minorCreditsAdded} out of {requiredCredits.minor} required credits added</p>
                                     </div>
                                 </header>
                             </div>
@@ -195,9 +285,10 @@
                                     <div class="slds-media__body">
                                         <h3 class="slds-card__header-title">
                                             <span class="slds-truncate">
-                                            Thesis (Capstone) Courses (7 credits)
+                                            Thesis (Capstone) Courses
                                             </span>
                                         </h3>
+                                        <p class="slds-text-heading_small slds-p-vertical_small">{thesisCreditsAdded} out of {requiredCredits.thesis} required credits added</p>
                                     </div>
                                 </header>
                             </div>
