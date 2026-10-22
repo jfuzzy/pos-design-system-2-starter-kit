@@ -12,10 +12,6 @@ const categoryOptions = [
 ];
 
 const baseColumns = [
-    { label: 'Course Title', fieldName: 'title'},
-    { label: 'Course ID', fieldName: 'cid' },
-    { label: 'Grade', fieldName: 'grade', initialWidth: 100 },
-    { label: 'Credits', fieldName: 'credits', initialWidth: 100 },
     {
         label: 'Section',
         fieldName: 'placement',
@@ -27,7 +23,11 @@ const baseColumns = [
             options: categoryOptions,
             variant: 'bare'
         }
-    }
+    },
+    { label: 'Course Title', fieldName: 'title'},
+    { label: 'Course ID', fieldName: 'cid' },
+    { label: 'Grade', fieldName: 'grade', initialWidth: 100 },
+    { label: 'Credits', fieldName: 'credits', initialWidth: 100 }
 ];
 
 const planColumns = [
