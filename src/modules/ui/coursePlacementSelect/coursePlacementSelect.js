@@ -7,7 +7,7 @@ export default class coursePlacementSelect extends LightningElement {
 
     get buttonLabel() {
         const selectedOption = (this.options || []).find(option => option.value === this.value);
-        return selectedOption?.label ?? 'Choose';
+        return selectedOption?.label ?? 'Add';
     }
 
     handleChange(event) {
