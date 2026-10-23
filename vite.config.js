@@ -62,6 +62,7 @@ export default defineConfig({
       enableDynamicComponents: true,
       exclude: [
         path.resolve('./src/data/posProgramConfig.json'),
+        path.resolve('./src/data/posCourseAlerts.json'),
         path.resolve('./index.html'),
         /loading\.css/,
         path.resolve('./src/build/generated'),

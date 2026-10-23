@@ -1,0 +1,27 @@
+<template>
+    <article class="slds-card slds-card_boundary slds-m-around_small">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__body">
+                    <h3 class="slds-card__header-title bold">
+                        <span>{header}</span>
+                    </h3>
+                </div>
+            </header>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <p>{body}</p>
+        </div>
+        <div class="slds-card__footer slds-card__footer_inner slds-align_absolute-center">
+            <div class="slds-align_absolute-center">
+                <lightning-icon
+                    icon-name={statusIcon}
+                    size="small"
+                    alternative-text={statusAlternativeText}
+                    class="slds-m-right_x-small">
+                </lightning-icon>
+                <span>{footer}</span>
+            </div>
+        </div>
+    </article>
+</template>

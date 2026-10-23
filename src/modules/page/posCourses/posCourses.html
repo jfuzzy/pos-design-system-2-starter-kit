@@ -16,81 +16,16 @@
                         The alerts default to showing all the fails and once they pass they are removed from the list.
                     </p>
                     <div class="slds-grid slds-gutters slds-wrap">
-                        <!-- When there are no fails -->
-                        <div class="slds-col slds-size_1-of-1">
-                            <article class="slds-card slds-card_boundary slds-m-around_small">
-                                <div class="slds-card__header slds-grid">
-                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                                        <div class="slds-media__body">
-                                            <h3 class="slds-card__header-title bold">
-                                                <span>
-                                                No alerts
-                                                </span>
-                                            </h3>
-                                        </div>
-                                    </header>
-                                </div>
-                                <div class="slds-card__body slds-card__body_inner">
-                                    <p>All requirements met</p>
-                                </div>
-                                <div class="slds-card__footer slds-card__footer_inner slds-align_absolute-center">
-                                    <div class="slds-align_absolute-center">
-                                        <lightning-icon icon-name="utility:success" size="small" class="slds-m-right_x-small"></lightning-icon>
-                                        <span>PASS</span>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <!-- Minor (1) Rule -->
-                        <div class="slds-col slds-size_1-of-1">
-                            <article class="slds-card slds-card_boundary slds-m-around_small">
-                                <div class="slds-card__header slds-grid">
-                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                                        <div class="slds-media__body">
-                                            <h3 class="slds-card__header-title bold">
-                                                <span>
-                                                Minor (1) requires 15 credits
-                                                </span>
-                                            </h3>
-                                        </div>
-                                    </header>
-                                </div>
-                                <div class="slds-card__body slds-card__body_inner">
-                                    <p>Your total: 12 credits</p>
-                                </div>
-                                <div class="slds-card__footer slds-card__footer_inner slds-align_absolute-center">
-                                    <div class="slds-align_absolute-center">
-                                        <lightning-icon icon-name="utility:warning" size="small" class="slds-m-right_x-small"></lightning-icon>
-                                        <span>FAIL</span>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <!-- Option (1) Rule -->
-                        <div class="slds-col slds-size_1-of-1">
-                            <article class="slds-card slds-card_boundary slds-m-around_small">
-                                <div class="slds-card__header slds-grid">
-                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                                        <div class="slds-media__body">
-                                            <h3 class="slds-card__header-title bold">
-                                                <span>
-                                                Option (1) requires 12 credits
-                                                </span>
-                                            </h3>
-                                        </div>
-                                    </header>
-                                </div>
-                                <div class="slds-card__body slds-card__body_inner">
-                                    <p>Your total: 10 credits</p>
-                                </div>
-                                <div class="slds-card__footer slds-card__footer_inner slds-align_absolute-center">
-                                    <div class="slds-align_absolute-center">
-                                        <lightning-icon icon-name="utility:warning" size="small" class="slds-m-right_x-small"></lightning-icon>
-                                        <span>FIX</span>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
+                        <template for:each={alerts} for:item="alert">
+                            <div key={alert.id} class="slds-col slds-size_1-of-1">
+                                <ui-posAlertCard
+                                    header={alert.header}
+                                    body={alert.body}
+                                    footer={alert.footer}
+                                    status={alert.status}>
+                                </ui-posAlertCard>
+                            </div>
+                        </template>
                     </div>
                 </lightning-card>
             </div>

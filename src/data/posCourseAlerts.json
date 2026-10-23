@@ -1,0 +1,23 @@
+[
+    {
+        "id": "no-alerts",
+        "header": "No alerts",
+        "body": "All requirements met",
+        "footer": "PASS",
+        "status": "pass"
+    },
+    {
+        "id": "minor-credits",
+        "header": "Minor (1) requires 15 credits",
+        "body": "Your total: 12 credits",
+        "footer": "FAIL",
+        "status": "fail"
+    },
+    {
+        "id": "option-credits",
+        "header": "Option (1) requires 12 credits",
+        "body": "Your total: 10 credits",
+        "footer": "MANUAL CHECK",
+        "status": "manual"
+    }
+]

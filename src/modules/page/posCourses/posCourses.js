@@ -1,4 +1,5 @@
 import { LightningElement } from 'lwc';
+import alerts from '../../../data/posCourseAlerts.json';
 import {
     getProgramRequirements,
     loadProgramSelection
@@ -49,8 +50,14 @@ const planColumns = [
 ];
 
 const transcriptCourseData = [
-    { id: '1', title: 'CROSS CULTURAL MANAGEMENT', cid: 'MGMT-546', grade: 'A+', credits: '3' },
-    { id: '2', title: 'ADVANCED INFORMATION SYSTEMS', cid: 'BA-572', grade: 'B-', credits: '4' }
+    { id: '1', title: 'CROSS CULTURAL MANAGEMENT HAS A VERY LONG TITLE SO THAT IT EXTENDS BEYOND THE DEFAULT COLUMN WIDTH', cid: 'MGMT-546', grade: 'A+', credits: '3' },
+    { id: '2', title: 'ADVANCED INFORMATION SYSTEMS', cid: 'BA-572', grade: 'B-', credits: '4' },
+    { id: '3', title: 'BUSINESS LAW', cid: 'BA-571', grade: 'A', credits: '3' },
+    { id: '4', title: 'ORGANIZATIONAL BEHAVIOR', cid: 'MGMT-545', grade: 'B+', credits: '3' },
+    { id: '5', title: 'FINANCIAL MANAGEMENT', cid: 'BA-574', grade: '', credits: '4' },
+    { id: '6', title: 'OPERATIONS MANAGEMENT', cid: 'BA-576', grade: '', credits: '3' },
+    { id: '7', title: 'INTERNATIONAL BUSINESS', cid: 'BA-577', grade: 'A', credits: '3' },
+    { id: '8', title: 'MANAGEMENT INFORMATION SYSTEMS', cid: 'BA-578', grade: 'B+', credits: '4' }
 ];
 
 const transferCourseData = [
@@ -100,6 +107,7 @@ function sumCourseCredits(courses) {
 export default class posCourses extends LightningElement {
     columns = baseColumns;
     planColumns = planColumns;
+    alerts = alerts;
     transferSearchTerm = '';
     transcriptSearchTerm = '';
     futureSearchTerm = '';
